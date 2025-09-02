@@ -3,19 +3,30 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="theme-color" content="#0ea5e9">
-    <link rel="manifest" href="/manifest.webmanifest">
-    <link rel="icon" href="/icons/icon-192.png">
+    <meta name="theme-color" content="#0ea5e9" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="icon" href="./icons/icon-192.png" />
     <title>StickerLog</title>
 
-    <!-- Cache buster para GitHub Pages -->
+    <!-- 1) Cache buster -->
     <script>
       (function () {
-        var VERSION = "3.6.1"; // 🔄 cambia en cada release
+        var VERSION = "3.6.2"; // <-- cambia en cada release
         var url = new URL(location.href);
         if (url.searchParams.get("v") !== VERSION) {
           url.searchParams.set("v", VERSION);
           location.replace(url.toString());
+        }
+      })();
+    </script>
+
+    <!-- 2) Desregistrar SW antiguo -->
+    <script>
+      (function () {
+        if ("serviceWorker" in navigator) {
+          navigator.serviceWorker.getRegistrations().then(function (regs) {
+            regs.forEach(function (r) { r.unregister(); });
+          });
         }
       })();
     </script>
@@ -25,5 +36,3 @@
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
-
-
