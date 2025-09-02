@@ -1,10 +1,29 @@
 <!doctype html>
 <html lang="es">
   <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="refresh" content="0; url=./index.html" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#0ea5e9">
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="icon" href="/icons/icon-192.png">
     <title>StickerLog</title>
+
+    <!-- Cache buster para GitHub Pages -->
+    <script>
+      (function () {
+        var VERSION = "3.6"; // 🔄 cambia en cada release
+        var url = new URL(location.href);
+        if (url.searchParams.get("v") !== VERSION) {
+          url.searchParams.set("v", VERSION);
+          location.replace(url.toString());
+        }
+      })();
+    </script>
   </head>
-  <body></body>
+  <body class="bg-slate-50">
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>
+
 
