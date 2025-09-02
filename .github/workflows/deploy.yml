@@ -21,18 +21,44 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # ---- DIAGNÓSTICO ÚTIL ----
+      - name: Debug tree (root)
+        run: |
+          echo "== PWD =="
+          pwd
+          echo "== ROOT FILES =="
+          ls -la
+          echo "== package.json? =="
+          if [ -f package.json ]; then cat package.json; else echo "NO package.json en raíz"; fi
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'npm'
 
-      # 👇 Usamos npm install en lugar de npm ci (soporta proyectos sin package-lock)
-      - name: Install dependencies
-        run: npm install
+      - name: Node info
+        run: |
+          node -v
+          npm -v
 
-      - name: Build
-        run: npm run build
+      # Si hay package-lock usamos npm ci; si no, npm install
+      - name: Install dependencies (ci or install)
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install
+          fi
+
+      # Ejecuta el build; si no existe script "build", usa npx vite build
+      - name: Build (script or npx)
+        run: |
+          if npm run | grep -E '^  build'; then
+            npm run build
+          else
+            npx vite build
+          fi
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
