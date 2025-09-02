@@ -4,14 +4,15 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#0ea5e9" />
+    <!-- Rutas relativas para GitHub Pages -->
     <link rel="manifest" href="./manifest.webmanifest" />
     <link rel="icon" href="./icons/icon-192.png" />
     <title>StickerLog</title>
 
-    <!-- 1) Cache buster -->
+    <!-- Cache-buster: fuerza a Pages/CDN a servir el index nuevo -->
     <script>
       (function () {
-        var VERSION = "3.6.4"; // <-- cambia en cada release
+        var VERSION = "3.7.0"; // Cambia en cada release
         var url = new URL(location.href);
         if (url.searchParams.get("v") !== VERSION) {
           url.searchParams.set("v", VERSION);
@@ -20,7 +21,7 @@
       })();
     </script>
 
-    <!-- 2) Desregistrar SW antiguo -->
+    <!-- Desregistrar cualquier Service Worker antiguo que pueda cachear el sitio -->
     <script>
       (function () {
         if ("serviceWorker" in navigator) {
@@ -33,6 +34,7 @@
   </head>
   <body class="bg-slate-50">
     <div id="root"></div>
+    <!-- En dev Vite usa /src/main.jsx; en build, Vite lo reemplaza por el bundle con hash -->
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
